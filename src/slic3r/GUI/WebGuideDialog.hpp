@@ -46,7 +46,9 @@ public:
         BBL_MODELS,
         BBL_FILAMENTS,
         BBL_FILAMENT_ONLY,
-        BBL_MODELS_ONLY
+        BBL_MODELS_ONLY,
+        BEGINNER_QUICK_START,
+        ROCK3TS_CLOUD_SUPPORT
     }m_page;
 
     //Web Function

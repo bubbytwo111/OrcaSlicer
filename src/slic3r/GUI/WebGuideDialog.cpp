@@ -241,6 +241,12 @@ wxString GuideFrame::SetStartPage(GuidePage startpage, bool load)
     } else if (startpage == BBL_MODELS_ONLY) {
         SetTitle("");
         TargetUrl = from_u8((boost::filesystem::path(resources_dir()) / "web/guide/0/index.html?target=24").make_preferred().string());
+    } else if (startpage == BEGINNER_QUICK_START) {
+        SetTitle(_L("Beginner Quick Start"));
+        TargetUrl = from_u8((boost::filesystem::path(resources_dir()) / "web/guide/0/index.html?target=41").make_preferred().string());
+    } else if (startpage == ROCK3TS_CLOUD_SUPPORT) {
+        SetTitle(_L("ROCK3TS Cloud & Support"));
+        TargetUrl = from_u8((boost::filesystem::path(resources_dir()) / "web/guide/0/index.html?target=42").make_preferred().string());
     }
     else {
         SetTitle(_L("Setup Wizard"));

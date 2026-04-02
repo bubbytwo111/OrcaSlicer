@@ -2508,6 +2508,8 @@ static wxMenu* generate_help_menu()
         [](wxCommandEvent&) { wxGetApp().keyboard_shortcuts(); });
     // Show Beginner's Tutorial
     append_menu_item(helpMenu, wxID_ANY, _L("Setup Wizard"), _L("Setup Wizard"), [](wxCommandEvent &) {wxGetApp().ShowUserGuide();});
+    append_menu_item(helpMenu, wxID_ANY, _L("Beginner Quick Start"), _L("Open the beginner quick start guide"), [](wxCommandEvent &) {wxGetApp().ShowBeginnerQuickStart();});
+    append_menu_item(helpMenu, wxID_ANY, _L("ROCK3TS Cloud & Support"), _L("Open cloud storage and support information"), [](wxCommandEvent &) {wxGetApp().ShowCloudSupport();});
 
     helpMenu->AppendSeparator();
     // Open Config Folder

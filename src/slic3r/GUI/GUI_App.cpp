@@ -3663,31 +3663,31 @@ bool GUI_App::dark_mode()
 
 const wxColour GUI_App::get_label_default_clr_system()
 {
-    return dark_mode() ? wxColour(115, 220, 103) : wxColour(26, 132, 57);
+    return dark_mode() ? wxColour("#34D399") : wxColour("#0F766E");
 }
 
 const wxColour GUI_App::get_label_default_clr_modified()
 {
-    return dark_mode() ? wxColour(253, 111, 40) : wxColour(252, 77, 1);
+    return dark_mode() ? wxColour("#60A5FA") : wxColour("#1D4ED8");
 }
 
 void GUI_App::init_label_colours()
 {
     bool is_dark_mode = dark_mode();
-    m_color_label_modified = is_dark_mode ? wxColour("#F1754E") : wxColour("#F1754E");
-    m_color_label_sys      = is_dark_mode ? wxColour("#B2B3B5") : wxColour("#363636");
+    m_color_label_modified = is_dark_mode ? wxColour("#60A5FA") : wxColour("#1D4ED8");
+    m_color_label_sys      = is_dark_mode ? wxColour("#D6E4FF") : wxColour("#1E3A8A");
 
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
-    m_color_label_default           = is_dark_mode ? wxColour(250, 250, 250) : m_color_label_sys; // wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
-    m_color_highlight_label_default = is_dark_mode ? wxColour(230, 230, 230): wxSystemSettings::GetColour(/*wxSYS_COLOUR_HIGHLIGHTTEXT*/wxSYS_COLOUR_WINDOWTEXT);
-    m_color_highlight_default       = is_dark_mode ? wxColour("#36363B") : wxColour("#F1F1F1"); // ORCA row highlighting
+    m_color_label_default           = is_dark_mode ? wxColour("#F8FAFC") : m_color_label_sys; // wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
+    m_color_highlight_label_default = is_dark_mode ? wxColour("#E0EAFF"): wxSystemSettings::GetColour(/*wxSYS_COLOUR_HIGHLIGHTTEXT*/wxSYS_COLOUR_WINDOWTEXT);
+    m_color_highlight_default       = is_dark_mode ? wxColour("#1E293B") : wxColour("#DBEAFE");
     m_color_hovered_btn_label       = is_dark_mode ? wxColour(255, 255, 254) : wxColour(0,0,0);
     m_color_default_btn_label       = is_dark_mode ? wxColour(255, 255, 254): wxColour(0,0,0);
-    m_color_selected_btn_bg         = is_dark_mode ? wxColour(84, 84, 91)   : wxColour(206, 206, 206);
+    m_color_selected_btn_bg         = is_dark_mode ? wxColour("#312E81")   : wxColour("#BFDBFE");
 #else
     m_color_label_default = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
 #endif
-    m_color_window_default          = is_dark_mode ? wxColour(43, 43, 43)   : wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
+    m_color_window_default          = is_dark_mode ? wxColour("#0F172A")   : wxColour("#F0F9FF");
     StateColor::SetDarkMode(is_dark_mode);
 }
 
@@ -4193,6 +4193,26 @@ if (res) {
         }
     } catch (std::exception &) {
         // wxMessageBox(e.what(), "", MB_OK);
+    }
+}
+
+void GUI_App::ShowBeginnerQuickStart() {
+    try {
+        GuideFrame guide_dlg(this);
+        guide_dlg.SetStartPage(GuideFrame::GuidePage::BEGINNER_QUICK_START);
+        guide_dlg.run();
+    } catch (std::exception &) {
+        ;
+    }
+}
+
+void GUI_App::ShowCloudSupport() {
+    try {
+        GuideFrame guide_dlg(this);
+        guide_dlg.SetStartPage(GuideFrame::GuidePage::ROCK3TS_CLOUD_SUPPORT);
+        guide_dlg.run();
+    } catch (std::exception &) {
+        ;
     }
 }
 
@@ -7585,6 +7605,7 @@ bool GUI_App::run_wizard(ConfigWizard::RunReason reason, ConfigWizard::StartPage
     //const bool res = wizard_t->run(reason, start_page);
 
     std::string strFinish = wxGetApp().app_config->get("firstguide", "finish");
+    const bool  first_launch_flow = (strFinish == "false" || strFinish.empty()) && reason == ConfigWizard::RR_DATA_EMPTY;
     long        pStyle    = wxCAPTION | wxCLOSE_BOX | wxSYSTEM_MENU;
     if (strFinish == "false" || strFinish.empty())
         pStyle = wxCAPTION | wxTAB_TRAVERSAL;
@@ -7601,6 +7622,9 @@ bool GUI_App::run_wizard(ConfigWizard::RunReason reason, ConfigWizard::StartPage
         load_current_presets();
         update_publish_status();
         mainframe->refresh_plugin_tips();
+        if (first_launch_flow) {
+            CallAfter([this] { ShowBeginnerQuickStart(); });
+        }
         // BBS: remove SLA related message
     }
 

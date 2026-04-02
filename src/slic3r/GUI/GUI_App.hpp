@@ -459,6 +459,8 @@ public:
 
     wxString        transition_tridid(int trid_id) const;
     void            ShowUserGuide();
+    void            ShowBeginnerQuickStart();
+    void            ShowCloudSupport();
     void            ShowDownNetPluginDlg();
     void            ShowUserLogin(bool show = true);
     void            ShowOnlyFilament();
