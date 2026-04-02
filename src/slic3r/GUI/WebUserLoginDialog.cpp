@@ -40,7 +40,7 @@ END_EVENT_TABLE()
 
 int ZUserLogin::web_sequence_id = 20000;
 
-ZUserLogin::ZUserLogin() : wxDialog((wxWindow *) (wxGetApp().mainframe), wxID_ANY, "OrcaSlicer")
+ZUserLogin::ZUserLogin() : wxDialog((wxWindow *) (wxGetApp().mainframe), wxID_ANY, "ROCK3TS 3D")
 {
     SetBackgroundColour(*wxWHITE);
     const auto bblnetwork_enabled =wxGetApp().app_config->get_bool("installed_networking");
